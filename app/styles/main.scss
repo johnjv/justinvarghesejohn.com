@@ -27,10 +27,15 @@ body {
   min-height: 100%;
 }
 
+.g--half {
+  -webkit-flex: flex;
+  -ms-flex: flexbox;
+  display: flex
+}
 .avatar {
   width: 128px;
   height: 128px;
-  background: url(../images/avatar.jpg);
+  background: url(../images/avatar.png);
   background-size: cover;
   border-radius: 50%;
   background-color: #7b5294;
