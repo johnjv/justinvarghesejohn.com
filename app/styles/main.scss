@@ -26,11 +26,31 @@ body {
   box-sizing: border-box;
   min-height: 100%;
 }
-
+.g-wide--full.top {
+  height: 45%;
+  width: 100%;
+}
+.g-wide--full.bottom {
+  height: 55%;
+  background: #7b5294;
+}
 .g--half {
-  -webkit-flex: flex;
-  -ms-flex: flexbox;
-  display: flex
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+
+}
+.g--half header {
+  text-align: center;
+  color: #fff;
+  padding-left: 1em;
+  padding-right: 1em
 }
 .avatar {
   width: 128px;
@@ -38,12 +58,31 @@ body {
   background: url(../images/avatar.png);
   background-size: cover;
   border-radius: 50%;
-  background-color: #7b5294;
-  // TODO: add flex to parent class
-  // -webkit-align-self: center;
-  // -ms-flex-item-align: center;
-  // align-self: center;
+  border: 7px solid #7b5294;
+  margin-top: -20px;
 }
+.icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px -8px; /* account for extra icon padding */
+}
+.icons a {
+  display: block;
+  width: 32px;
+  height: 32px;
+  padding: 8px; /* make the touch target bigger */
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 32px 32px;
+  filter: drop-shadow(0 0 0 rgba(#000, 0));
+  margin: 0 10px;
+}
+a.twitter {background-image: url(../images/icons/icon_twitter.svg);}
+a.soundcloud {background-image: url(../images/icons/icon_soundcloud.svg);}
+a.googleplus {background-image: url(../images/icons/icon_googleplus.svg);}
+a.github {background-image: url(../images/icons/icon_github.svg);}
+a.linkedin {background-image: url(../images/icons/icon_linkedin.svg);}
 
 @media only screen and (max-width: 360px) {
   .avatar {
