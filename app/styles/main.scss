@@ -26,13 +26,20 @@ body {
   box-sizing: border-box;
   min-height: 100%;
 }
+.g-wide--full.top, .g-wide--full.bottom {
+  position: relative;
+}
 .g-wide--full.top {
   height: 45%;
   width: 100%;
+  z-index: 1;
+  display: block;
 }
 .g-wide--full.bottom {
   height: 55%;
   background: #7b5294;
+  z-index: 100;
+  box-shadow: 0px 0px 3px #000;
 }
 .g--half {
   display: -webkit-flex;
@@ -52,6 +59,9 @@ body {
   padding-left: 1em;
   padding-right: 1em
 }
+.g--half header p {
+  padding-top: 0px;
+}
 .avatar {
   width: 128px;
   height: 128px;
@@ -65,7 +75,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 10px -8px; /* account for extra icon padding */
+  margin-top: 30px; /* account for extra icon padding */
 }
 .icons a {
   display: block;
