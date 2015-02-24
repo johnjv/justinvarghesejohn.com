@@ -3,12 +3,12 @@
 
 # TEAM
 
-  <name> -- <role> -- <twitter>
+  Justin John -- Developer -- @qiaozhengyi
 
 # THANKS
 
-  <name>
+  You!
 
 # TECHNOLOGY COLOPHON
 
-  HTML5, CSS3
+  HTML5, CSS3, JS, WEB AUDIO API, CANVAS, NODE.JS

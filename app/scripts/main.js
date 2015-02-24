@@ -47,9 +47,19 @@
             initialize();
             animate();
 
-            $(".avatar").on("click", function() {
+            $(".fab.play-button").on("click", function() {
+              if($(this).hasClass('play-button')) {
                 document.getElementById('music').play();
+                $(this).find('.more-icon').removeClass('icon-headphones').addClass('icon-pause2')
+                $(this).removeClass('play-button').addClass('pause-button');
+              }
+              else {
+                document.getElementById('music').pause();
+                $(this).find('.more-icon').removeClass('icon-pause2').addClass('icon-headphones')
+                $(this).removeClass('pause-button').addClass('play-button');
+              } 
             });
+
 
         });
 
@@ -174,16 +184,12 @@
             for (var i = 0; i < bufferLength; i++) {
                 barHeight = fdata[i] / 2;
                 ctx.fillStyle = 'rgb(60,' + (barHeight + 100) + ',' + (barHeight/4 + 70);
-                ctx.fillRect(x, $(canvas).height()  - barHeight *1.9, barWidth, barHeight);
+                ctx.fillRect(x, $(canvas).height()  - (barHeight * 1.5), barWidth, barHeight);
 
                 x += barWidth + 1;
             }
         //have the browser run this animation just before each screen refresh
         requestAnimationFrame(animate);
     };
-
-    var draw = function() {
-
-    }
 
 })();
