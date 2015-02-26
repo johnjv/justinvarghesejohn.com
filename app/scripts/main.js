@@ -21,12 +21,10 @@
 
         var $canvas; // $canvas jquery object we're drawing to
         var ctx; // $canvas drawing context
-        var audioctx;
+        var audioCtx;
         var analyser;
         var fdata = null;
         var tdata = null;
-        var visualizations = [];
-        var v = 'c';
         var lines;
         var numLines = 32; // how many lines to draw
         var speed = 8;
@@ -74,21 +72,19 @@
         }
 
         var initializeWebAudio = function() {
-            if ('webkitAudioContext' in window) {
-                audioctx = new webkitAudioContext();
-                analyser = audioctx.createAnalyser();
-            }
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioCtx.createAnalyser();
+            
             var audio = new Audio();
             audio.src = 'https://dl.dropboxusercontent.com/u/443853/Dark%20Water.mp3';
-            audio.type = "audio/ogg"
             audio.id = 'music';
             audio.controls = false;
             audio.autoplay = false;
             $('.g-wide--full.bottom').append(audio);
 
-            var source = audioctx.createMediaElementSource(audio);
+            var source = audioCtx.createMediaElementSource(audio);
             source.connect(analyser);
-            analyser.connect(audioctx.destination);
+            analyser.connect(audioCtx.destination);
 
             analyser.fftSize = 256;
             console.log(analyser.frequencyBinCount); // fftSize/2 = 32 data points
@@ -184,7 +180,7 @@
             for (var i = 0; i < bufferLength; i++) {
                 barHeight = fdata[i] / 2;
                 ctx.fillStyle = 'rgb(60,' + (barHeight + 100) + ',' + (barHeight/4 + 70);
-                ctx.fillRect(x, $(canvas).height()  - (barHeight * 1.5), barWidth, barHeight);
+                ctx.fillRect(x, $(canvas).height()  - (barHeight - 64), barWidth, barHeight + 64);
 
                 x += barWidth + 1;
             }
