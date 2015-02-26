@@ -40,6 +40,7 @@ body {
   background: #7b5294;
   z-index: 100;
   box-shadow: 0px 0px 3px #000;
+  display: flex;
 }
 .g--half {
   display: -webkit-flex;
@@ -58,6 +59,9 @@ body {
   color: #fff;
   padding-left: 1em;
   padding-right: 1em
+}
+.g--half header h1 {
+  padding-top: 0px;
 }
 .g--half header p {
   padding-top: 0px;
@@ -98,9 +102,20 @@ body {
   top: 2.5%;
   right: 2.5%;
   box-shadow: 0px 3px 3px #636363;
+
+  @include medium {
+    top: 42%;
+  }
 }
+.fab:hover,
 .fab:active {
   box-shadow: none;
+  transition: all 0ms linear;
+  padding: 26px;
+
+  @include medium {
+    padding: 36px;
+  }
 }
 @media only screen and (max-width: 360px) {
   .avatar {
@@ -115,15 +130,45 @@ body {
 
 /** Larger Screens - desktops and tablets **/
 @media all and (min-width: 700px) {
-  .fab {
-    top: 40%;
-  }
+  
 }
 
 /** Larger Screens - desktops and tablets **/
 @media all and (min-width: 990px) {
   body {
     overflow-y: scroll;
+  }
+}
+
+@media only screen and (max-height: 460px) {
+  .g--half header h1 {
+    font-size: 32px;
+  }
+  .g--half header p {
+    font-size: 14px;
+  }
+  .g--half {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    justify-content: center;
+    width: 87.75%
+  }
+  .avatar {
+      width:96px;
+      height: 96px;
+      margin-top: -20px;
+  }
+  .fab {
+    // top: 36%;
+  }
+  .icons {
+    flex-direction: column;
+    margin-top: 0.5em;
+  }
+  .icons a {
+    font-size: 16px;
+    margin: 0 7px;
   }
 }
 
