@@ -1,7 +1,7 @@
 /**
  *
- *  Web Starter Kit
- *  Copyright 2014 Google Inc. All rights reserved.
+ *  justinvarghesejohn.com
+ *  Copyright 2015 Justin Varghese John
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -146,7 +146,7 @@ gulp.task('serve', ['styles'], function () {
   browserSync({
     notify: false,
     // Customize the BrowserSync console logging prefix
-    logPrefix: 'WSK',
+    logPrefix: 'JVJ',
     // Run as an https by uncommenting 'https: true'
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
@@ -164,7 +164,7 @@ gulp.task('serve', ['styles'], function () {
 gulp.task('serve:dist', ['default'], function () {
   browserSync({
     notify: false,
-    logPrefix: 'WSK',
+    logPrefix: 'JVJ',
     // Run as an https by uncommenting 'https: true'
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
