@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="description" content="Wings for this World website.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Web Starter Kit</title>
+    <title>Wings for this World</title>
 
     <!-- Add to homescreen -->
     <link rel="manifest" href="manifest.json">
@@ -33,13 +33,13 @@
     -->
 
     <!-- Page styles -->
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/wings-for-this-world.css">
   </head>
   <body>
     <header class="app-bar promote-layer">
       <div class="app-bar-container">
         <button class="menu"><img src="images/hamburger.svg" alt="Menu"></button>
-        <h1 class="logo">Web <strong>Starter Kit</strong></h1>
+        <h1 class="logo">Wings <strong>for this World</strong></h1>
         <section class="app-bar-actions">
         <!-- Put App Bar Buttons Here -->
         <!-- e.g <button><i class="icon icon-star"></i></button> -->
@@ -52,21 +52,54 @@
       <ul>
         <li><a href="#hello">Hello</a></li>
         <li><a href="#get-started">Get Started</a></li>
-        <li><a href="styleguide.html">Style Guide</a></li>
+        <li><a href="#learn-more">Learn More</a></li>
       </ul>
     </nav>
 
     <main>
       <h1 id="hello">Hello!</h1>
-      <p>Welcome to Web Starter Kit.</p>
-
-      <h2 id="get-started">Get Started.</h2>
-      <p>Read how to <a href="https://developers.google.com/web/starter-kit">Get Started</a> or check out the <a href="styleguide.html">Style Guide</a>.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </main>
 
-    <!-- build:js scripts/main.min.js -->
-    <script src="scripts/main.js"></script>
-    <!-- endbuild -->
+    <script type="text/javascript">
+    (function () {
+      'use strict';
+
+      var querySelector = document.querySelector.bind(document);
+
+      var navdrawerContainer = querySelector('.navdrawer-container');
+      var body = document.body;
+      var appbarElement = querySelector('.app-bar');
+      var menuBtn = querySelector('.menu');
+      var main = querySelector('main');
+
+      function closeMenu() {
+        body.classList.remove('open');
+        appbarElement.classList.remove('open');
+        navdrawerContainer.classList.remove('open');
+      }
+
+      function toggleMenu() {
+        body.classList.toggle('open');
+        appbarElement.classList.toggle('open');
+        navdrawerContainer.classList.toggle('open');
+        navdrawerContainer.classList.add('opened');
+      }
+
+      main.addEventListener('click', closeMenu);
+      menuBtn.addEventListener('click', toggleMenu);
+      navdrawerContainer.addEventListener('click', function (event) {
+        if (event.target.nodeName === 'A' || event.target.nodeName === 'LI') {
+          closeMenu();
+        }
+      });
+    })();
+    </script>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
@@ -74,7 +107,7 @@
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-XXXXX-X', 'auto');
+      ga('create', 'UA-46975210-2', 'auto');
       ga('send', 'pageview');
     </script>
     <!-- Built with love using Web Starter Kit -->
