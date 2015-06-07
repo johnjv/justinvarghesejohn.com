@@ -26,150 +26,15 @@ body {
   box-sizing: border-box;
   min-height: 100%;
 }
-.g-wide--full.top, .g-wide--full.bottom {
-  position: relative;
-}
-.g-wide--full.top {
-  height: 45%;
-  width: 100%;
-  z-index: 1;
-  display: block;
-}
-.g-wide--full.bottom {
-  height: 55%;
-  background: #7b5294;
-  z-index: 100;
-  box-shadow: 0px 0px 3px #000;
-  display: flex;
-}
-.g--half {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
 
-}
-.g--half header {
+.g--half.g--centered {
   text-align: center;
-  color: #fff;
-  padding-left: 1em;
-  padding-right: 1em
 }
-.g--half header h1 {
-  padding-top: 0px;
-}
-.g--half header p {
-  padding-top: 0px;
-}
-.avatar {
-  width: 128px;
-  height: 128px;
-  background: url(../images/avatar.png);
-  background-size: cover;
+.tapper {
+  width:250px;
+  height:250px;
   border-radius: 50%;
-  border: 7px solid #7b5294;
-  margin-top: -20px;
-}
-.icons {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 30px; /* account for extra icon padding */
-}
-.icons a {
-  display: block;
-  font-size: 30px;
-  padding: 8px; /* make the touch target bigger */
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: 32px 32px;
-  filter: drop-shadow(0 0 0 rgba(#000, 0));
-  margin: 0 10px;
-  text-decoration: none;
-  color: #fff
-}
-
-.fab {
-  position: absolute;
-  z-index: 1000;
-  background: rgb(60,180,100);
-  border: none;
-  top: 2.5%;
-  right: 2.5%;
-  box-shadow: 0px 3px 3px #636363;
-
-  @include medium {
-    top: 42%;
-  }
-}
-.fab:hover,
-.fab:active {
-  box-shadow: none;
-  transition: all 0ms linear;
-  padding: 26px;
-
-  @include medium {
-    padding: 36px;
-  }
-}
-@media only screen and (max-width: 360px) {
-  .avatar {
-      width:96px;
-      height: 96px
-  }
-  .icons a {
-    font-size: 20px;
-    margin: 0 7px;
-  }
-}
-
-/** Larger Screens - desktops and tablets **/
-@media all and (min-width: 700px) {
-  
-}
-
-/** Larger Screens - desktops and tablets **/
-@media all and (min-width: 990px) {
-  body {
-    overflow-y: scroll;
-  }
-}
-
-@media only screen and (max-height: 460px) {
-  .g--half header h1 {
-    font-size: 32px;
-  }
-  .g--half header p {
-    font-size: 14px;
-  }
-  .g--half {
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    justify-content: center;
-    width: 87.75%
-  }
-  .avatar {
-      width:96px;
-      height: 96px;
-      margin-top: -20px;
-  }
-  .fab {
-    // top: 36%;
-  }
-  .icons {
-    flex-direction: column;
-    margin-top: 0.5em;
-  }
-  .icons a {
-    font-size: 16px;
-    margin: 0 7px;
-  }
+  background-color:green;
 }
 
 @font-face {
