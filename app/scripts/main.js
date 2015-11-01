@@ -20,83 +20,66 @@ var audioCtx;
 
 (function() {
     'use strict';
-    console.log("%cconnecting things", "color: #7b5294; text-size: x-large;");
 
     var $canvas; // $canvas jquery object we're drawing to
     var ctx; // $canvas drawing context
     var analyser;
     var fdata = null;
     var tdata = null;
+    var analyser2;
+    var fdata2 = null;
+    var tdata2 = null;
     var w, h;
     var animation;
+    var CANVAS_HEIGHT, CANVAS_WIDTH;
 
-    // requestAnim shim layer by Paul Irish
-    // var lastTime = 0;
-    // var vendors = ['ms', 'moz', 'webkit', 'o'];
-    // for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-    //     window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-    //     window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
-    // }
-
-    // if (!window.requestAnimationFrame)
-    //     window.requestAnimationFrame = function(callback, element) {
-    //         var currTime = new Date().getTime();
-    //         var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-    //         var id = window.setTimeout(function() {
-    //                 callback(currTime + timeToCall);
-    //             },
-    //             timeToCall);
-    //         lastTime = currTime + timeToCall;
-    //         return id;
-    //     };
-
-    // if (!window.cancelAnimationFrame)
-    //     window.cancelAnimationFrame = function(id) {
-    //         clearTimeout(id);
-    //     };
-    // window.requestAnimFrame = (function() {
-    //     return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
-    //         function( /* function */ callback, /* DOMElement */ element) {
-    //             window.setTimeout(callback, 1000 / 60);
-    //         };
-    // })();
 
     // Fires when the page first loads
     $(document).ready(function() {
-        // please note, that IE11 now returns undefined again for window.chrome
-        var isChromium = window.chrome,
-            vendorName = window.navigator.vendor;
-        if (isChromium !== null && isChromium !== undefined && vendorName === "Google Inc.") {
+ 
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) === false) {
+
             initializeCanvas();
             initializeWebAudio();
             //animate();
 
-            $(".fab.play-button").on("click", function() {
+            $('#fab').on('click', function(event) {
                 if ($(this).hasClass('play-button')) {
-                    $('#music').trigger('play');
+                    $('#bass').trigger('play');
+                    $('#tabla').trigger('play');
                     $(this).find('.more-icon').removeClass('icon-headphones').addClass('icon-pause2')
                     $(this).removeClass('play-button').addClass('pause-button');
                     animation = window.requestAnimationFrame(animate);
                     // animate();
                 } else {
-                    $('#music').trigger('pause');
+                    $('#bass').trigger('pause');
+                    $('#tabla').trigger('pause');
                     $(this).find('.more-icon').removeClass('icon-pause2').addClass('icon-headphones')
                     $(this).removeClass('pause-button').addClass('play-button');
                     window.cancelAnimationFrame(animation);
+                    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
                 }
             });
         } else {
-            $('.fab').hide();
+            $('#fab').hide();
+        }
+
+
+        window.onresize = function(event) {
+            CANVAS_HEIGHT = $canvas.height();
+            CANVAS_WIDTH = $canvas.width();
         }
 
 
     });
 
     var initializeCanvas = function() {
-        $canvas = $("#canvas");
-        ctx = $canvas.get(0).getContext("2d");
+        $canvas = $('#canvas');
+        ctx = $canvas.get(0).getContext('2d');
         w = $canvas.parent().width();
         h = $canvas.parent().height();
+        CANVAS_HEIGHT = $canvas.height();
+        CANVAS_WIDTH = $canvas.width();
         // Resize the $canvas to fill the entire page
         // $canvas.attr('width', w);
         // $canvas.attr('height', h);
@@ -105,30 +88,46 @@ var audioCtx;
     var initializeWebAudio = function() {
         audioCtx = new AudioContext();
         analyser = audioCtx.createAnalyser();
+        analyser2 = audioCtx.createAnalyser();
 
-        // var audio = new Audio();
-        // audio.src = 'https://dl.dropboxusercontent.com/u/443853/Dark%20Water.mp3';
-        // audio.id = 'music';
-        // audio.controls = false;
-        // audio.autoplay = false;
-        // $('.g-wide--full.bottom').append(audio);
-        var audio = document.querySelector('audio');
-        console.log(audio);
+        var audio = new Audio();
+        audio.src = 'audio/mantra--bass.ogg';
+        audio.id = 'bass';
+        audio.controls = false;
+        audio.autoplay = false;
+        $('main').append(audio);
+
+        var audio2 = new Audio();
+        audio2.src = 'audio/mantra--tabla.ogg';
+        audio2.id = 'tabla';
+        audio2.controls = false;
+        audio2.autoplay = false;
+        $('main').append(audio2);
+
         var source = audioCtx.createMediaElementSource(audio);
         source.connect(analyser);
-
         var gainNode = audioCtx.createGain();
         gainNode.gain.value = 1;
-
         analyser.connect(gainNode);
         gainNode.connect(audioCtx.destination);
+        analyser.fftSize = 2048;
+        analyser.smoothingTimeConstant = 0.1;
 
-        analyser.fftSize = 1024;
-        analyser.smoothingTimeConstant = 1;
+        var source2 = audioCtx.createMediaElementSource(audio2);
+        source2.connect(analyser2);
+        var gainNode2 = audioCtx.createGain();
+        gainNode2.gain.value = 1;
+        analyser2.connect(gainNode2);
+        gainNode2.connect(audioCtx.destination);
+        analyser2.fftSize = 2048;
+        analyser2.smoothingTimeConstant = 1;
         //console.log(analyser.frequencyBinCount); // fftSize/2 = 32 data points
         // Get the new frequency data
-        if (fdata == null || tdata == null) {
+        if (fdata === null || tdata === null) {
             fdata = tdata = new Uint8Array(analyser.frequencyBinCount);
+        }
+        if (fdata2 === null || tdata2 === null) {
+            fdata2 = tdata2 = new Uint8Array(analyser2.frequencyBinCount);
         }
     }
 
@@ -139,13 +138,45 @@ var audioCtx;
 
         analyser.getByteFrequencyData(fdata);
         analyser.getByteTimeDomainData(tdata);
+
+        analyser2.getByteFrequencyData(fdata2);
+        analyser2.getByteTimeDomainData(tdata2);
+
         var bufferLength = analyser.frequencyBinCount;
+        var bufferLength2 = analyser2.frequencyBinCount;
 
         // clear the screen from the previous step of the animation
-        ctx.clearRect(0, 0, $canvas.width(), $canvas.height());
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        
+
+
+        // BAR GRAPH
+        var barWidth = (CANVAS_WIDTH / bufferLength2);
+        var barHeight;
+        var x = 0;
+        
+
+        for (var i = 0; i < bufferLength2; i++) {
+            barHeight = fdata2[i];
+            ctx.fillStyle = 'rgb(105,240,174)';
+            ctx.fillRect(x, CANVAS_HEIGHT/2 - barHeight+ 50, barWidth+1, barHeight);
+
+            x += barWidth;
+        }
+
+        x = 0;
+
+        for (var i = 0; i < bufferLength; i++) {
+            barHeight = fdata2[i];
+            ctx.fillStyle = 'rgb(126,87,194)';
+            //ctx.fillStyle = 'rgb(70,' + (barHeight + 120) + ',' + (barHeight/4 + 80);
+            ctx.fillRect(x, CANVAS_HEIGHT/2 - barHeight + 100, barWidth+1, barHeight);
+
+            x += barWidth;
+        }
 
         // TIME DOMAIN WAVEFORM
-        // ctx.strokeStyle = 'rgb(119,79,186)';
+        // ctx.strokeStyle = 'rgb(105,240,174)';
         // ctx.lineWidth = 10;
         // ctx.beginPath();
 
@@ -154,8 +185,8 @@ var audioCtx;
 
         // for (var i = 0; i < bufferLength; i++) {
 
-        //     var v = fdata[i] / 128.0;
-        //     var y = v * $canvas.height() / 4;
+        //     var v = tdata[i] / 128.0;
+        //     var y = v * CANVAS_HEIGHT / 4;
 
         //     if (i === 0) {
         //         ctx.moveTo(x, y);
@@ -165,23 +196,38 @@ var audioCtx;
 
         //     x += sliceWidth;
         // }
-        // ctx.lineTo($canvas.width(), $canvas.height() / 4);
+        // ctx.lineTo(CANVAS_WIDTH, CANVAS_HEIGHT / 2);
         // ctx.stroke();
 
-        // BAR GRAPH
-        var barWidth = ($canvas.width() / bufferLength);
-        var barHeight;
-        var x = 0;
-        for (var i = 0; i < bufferLength; i++) {
-            barHeight = fdata[i];
-            //console.log(fdata[i]);
-            //console.log(barHeight);
-            ctx.fillStyle = 'rgb(60,180,100)';
-            //ctx.fillStyle = 'rgb(70,' + (barHeight + 120) + ',' + (barHeight/4 + 80);
-            ctx.fillRect(x, $canvas.height() - barHeight, barWidth, barHeight);
 
-            x += barWidth;
-        }
+
+        // ctx.strokeStyle = 'rgb(126,87,194)';
+        // ctx.lineWidth = 1;
+
+        // ctx.beginPath();
+
+        // var sliceWidth = w * 1.0 / bufferLength2;
+        // var x = 0;
+
+        // for (var i = 0; i < bufferLength2; i++) {
+
+        //     var v = tdata2[i] / 128.0;
+
+        //     var y = v * CANVAS_HEIGHT / 4;
+
+        //     if (i === 0) {
+        //         ctx.moveTo(x, y);
+        //     } else {
+        //         ctx.lineTo(x, y);
+        //     }
+
+        //     x += sliceWidth;
+        // }
+        // ctx.lineTo(CANVAS_WIDTH, CANVAS_HEIGHT / 2);
+
+
+
+        // ctx.stroke();
 
         requestAnimationFrame(animate);
 
