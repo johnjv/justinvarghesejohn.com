@@ -36,7 +36,7 @@ var audioCtx;
 
     // Fires when the page first loads
     $(document).ready(function() {
- 
+
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) === false) {
 
             initializeCanvas();
@@ -98,7 +98,7 @@ var audioCtx;
         $('main').append(audio);
 
         var audio2 = new Audio();
-        audio2.src = 'audio/mantra--tabla.ogg';
+        audio2.src = 'audio/mantra--tabla.mp3';
         audio2.id = 'tabla';
         audio2.controls = false;
         audio2.autoplay = false;
@@ -147,14 +147,14 @@ var audioCtx;
 
         // clear the screen from the previous step of the animation
         ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        
+
 
 
         // BAR GRAPH
         var barWidth = (CANVAS_WIDTH / bufferLength2);
         var barHeight;
         var x = 0;
-        
+
 
         for (var i = 0; i < bufferLength2; i++) {
             barHeight = fdata2[i];
