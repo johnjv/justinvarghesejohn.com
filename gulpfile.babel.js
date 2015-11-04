@@ -1,13 +1,13 @@
-/**
+/*!
  *
- *  Web Starter Kit
- *  Copyright 2015 Google Inc. All rights reserved.
+ *  justinvarghesejohn.com
+ *  Copyright 2015 Justin Varghese John
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
- *      https://www.apache.org/licenses/LICENSE-2.0
+ *    https://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
@@ -67,6 +67,16 @@ gulp.task('copy', () =>
     dot: true
   }).pipe(gulp.dest('dist'))
     .pipe($.size({title: 'copy'}))
+);
+
+// Copy all audio files in the audio folder
+gulp.task('copy', () =>
+  gulp.src([
+    'app/audio/*'
+  ], {
+    base: 'app'
+  }).pipe(gulp.dest('dist'))
+    .pipe($.size({title: 'audio'}))
 );
 
 // Compile and automatically prefix stylesheets
