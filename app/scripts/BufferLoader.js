@@ -17,7 +17,7 @@
  *
  */
 
- 'use strict'
+'use strict'
 
 class BufferLoader {
 
@@ -29,7 +29,7 @@ class BufferLoader {
         this.loadCount = 0;
     }
 
-    loadBuffer(url, index) {
+    _loadBuffer(url, index) {
         var request = new XMLHttpRequest();
         request.open("GET", url, true);
         request.responseType = "arraybuffer";
@@ -56,6 +56,6 @@ class BufferLoader {
 
     load() {
         for (var i = 0; i < this.urlList.length; ++i)
-            this.loadBuffer(this.urlList[i], i);
+            this._loadBuffer(this.urlList[i], i);
     }
 }
