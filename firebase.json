@@ -1,0 +1,10 @@
+{
+  "firebase": "justinvarghesejohn",
+  "public": "dist",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**",
+    ".git"
+  ]
+}
