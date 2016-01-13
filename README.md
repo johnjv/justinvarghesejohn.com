@@ -1,4 +1,4 @@
-This is the source code to my personal site justinvarghesejohn.com. It is a simple responsive page that consists of external links and other random stuff. Built using the [Web Starter Kit](https://developers.google.com/web/starter-kit/) with [Gulp](http://gulpjs.com/) as the build system.
+This is the source code to my personal site [justinvarghesejohn.com](https://justinvarghesejohn.com). It is a simple responsive page that consists of external links and other random stuff. Built using the [Web Starter Kit](https://developers.google.com/web/starter-kit/) with [Gulp](http://gulpjs.com/) as the build system.
 
 ## Prerequisites
 
