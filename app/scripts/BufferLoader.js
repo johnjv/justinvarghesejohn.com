@@ -17,7 +17,7 @@
  *
  */
 
-'use strict'
+'use strict';
 
 class BufferLoader {
 
