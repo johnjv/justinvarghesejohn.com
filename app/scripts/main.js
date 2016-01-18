@@ -16,10 +16,12 @@
  *  limitations under the License
  *
  */
+
+'use strict';
+
 var audioCtx;
 
 (function() {
-    'use strict';
 
     var $canvas; // $canvas jquery object we're drawing to
     var ctx; // $canvas drawing context
