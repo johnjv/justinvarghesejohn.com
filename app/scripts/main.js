@@ -98,7 +98,7 @@ var audioCtx;
         $('main').append(audio);
 
         var audio2 = new Audio();
-        audio2.src = 'audio/sunset.ogg';
+        audio2.src = 'audio/mantra--tabla.ogg';
         audio2.id = 'tabla';
         audio2.controls = false;
         audio2.autoplay = false;
