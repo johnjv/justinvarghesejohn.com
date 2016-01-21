@@ -64,6 +64,7 @@ var timer = {
     this.timeoutID = window.setTimeout( function() {
     	self.stop();
     	tapTempo.clearTimes();
+			$('#bpm').text('---');
     }, 3000);
   },
 
@@ -92,7 +93,7 @@ function updateView() {
 	if(tapTempo.taps.length > 2) {
 		var bpm = Math.round(tapTempo.getBpm());
 		$('#bpm').text(bpm);
-	} 
+	}
 	else if(tapTempo.taps.length == 0) {
 		$('#bpm').text('---');
 	}
@@ -102,5 +103,5 @@ function updateView() {
 }
 
 function visualizeTap() {
-	
+
 }
