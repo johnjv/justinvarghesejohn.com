@@ -47,15 +47,15 @@ var audioCtx;
 
             $('#fab').on('click', function(event) {
                 if ($(this).hasClass('play-button')) {
-                    $('#bass').trigger('play');
-                    $('#tabla').trigger('play');
+                    document.getElementById('bass').play());
+                    document.getElementById('tabla').play());
                     $(this).find('.more-icon').removeClass('icon-headphones').addClass('icon-pause2')
                     $(this).removeClass('play-button').addClass('pause-button');
                     animation = window.requestAnimationFrame(animate);
                     // animate();
                 } else {
-                    $('#bass').trigger('pause');
-                    $('#tabla').trigger('pause');
+                  document.getElementById('bass').pause());
+                  document.getElementById('tabla').pause());
                     $(this).find('.more-icon').removeClass('icon-pause2').addClass('icon-headphones')
                     $(this).removeClass('pause-button').addClass('play-button');
                     window.cancelAnimationFrame(animation);
@@ -63,7 +63,7 @@ var audioCtx;
                 }
             });
         } else {
-            $('#fab').hide();
+            document.querySelector('#fab').hide();
         }
 
 
