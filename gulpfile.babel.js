@@ -154,7 +154,8 @@ gulp.task('html', () => {
       // CSS Selectors for UnCSS to ignore
       ignore: [
         /.navdrawer-container.open/,
-        /.app-bar.open/
+        /.app-bar.open/,
+        /.icon-pause2/
       ]
     })))
 
