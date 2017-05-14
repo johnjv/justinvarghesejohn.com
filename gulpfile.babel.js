@@ -70,13 +70,22 @@ gulp.task('copy', () =>
 );
 
 // Copy all audio files in the audio folder
-gulp.task('copy', () =>
+gulp.task('copy-audio', () =>
   gulp.src([
     'app/audio/*'
   ], {
     base: 'app'
   }).pipe(gulp.dest('dist'))
     .pipe($.size({title: 'audio'}))
+);
+// Copy all font files in the audio folder
+gulp.task('copy-fonts', () =>
+  gulp.src([
+    'app/fonts/icons/**/*'
+  ], {
+    base: 'app'
+  }).pipe(gulp.dest('dist'))
+    .pipe($.size({title: 'fonts'}))
 );
 
 // Compile and automatically prefix stylesheets
@@ -121,9 +130,8 @@ gulp.task('scripts', () =>
       // Note: Since we are not using useref in the scripts build pipeline,
       //       you need to explicitly list your scripts here in the right order
       //       to be correctly concatenated
-      './app/scripts/jquery-2.1.3.min.js',
-      './app/scripts/main.js',
-      './app/scripts/BufferLoader.js'
+      // './app/scripts/jquery-2.1.3.min.js',
+      './app/scripts/main.js'
     ])
       .pipe($.newer('.tmp/scripts'))
       .pipe($.sourcemaps.init())
@@ -147,17 +155,17 @@ gulp.task('html', () => {
     // Remove any unused CSS
     // Note: If not using the Style Guide, you can delete it from
     //       the next line to only include styles your project uses.
-    .pipe($.if('*.css', $.uncss({
-      html: [
-        'app/index.html'
-      ],
-      // CSS Selectors for UnCSS to ignore
-      ignore: [
-        /.navdrawer-container.open/,
-        /.app-bar.open/,
-        /.icon-pause2/
-      ]
-    })))
+    // .pipe($.if('*.css', $.uncss({
+    //   html: [
+    //     'app/index.html'
+    //   ],
+    //   // CSS Selectors for UnCSS to ignore
+    //   ignore: [
+    //     /.navdrawer-container.open/,
+    //     /.app-bar.open/,
+    //     /.icon-pause2/
+    //   ]
+    // })))
 
     // Concatenate and minify styles
     // In case you are still using useref build blocks
@@ -216,7 +224,7 @@ gulp.task('serve:dist', ['default'], () =>
 gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
-    ['jshint', 'html', 'scripts', 'images', 'copy'],
+    ['html', 'scripts', 'images', 'copy', 'copy-audio', 'copy-fonts'],
     'generate-service-worker',
     cb
   )
