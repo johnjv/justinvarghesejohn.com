@@ -23,8 +23,8 @@ var audioCtx;
 
 (function() {
 
-    var $canvas; // $canvas jquery object we're drawing to
-    var ctx; // $canvas drawing context
+    var canvas;
+    var ctx;
     var analyser;
     var fdata = null;
     var tdata = null;
@@ -35,101 +35,112 @@ var audioCtx;
     var animation;
     var CANVAS_HEIGHT, CANVAS_WIDTH;
 
-
     // Fires when the page first loads
-    $(document).ready(function() {
+    document.addEventListener('DOMContentLoaded', function() {
 
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) === false) {
 
-            initializeCanvas();
-            initializeWebAudio();
-            //animate();
+        initializeCanvas();
+        initializeWebAudio();
+        //animate();
 
-            $('#fab').on('click', function(event) {
-                if ($(this).hasClass('play-button')) {
-                    document.getElementById('bass').play());
-                    document.getElementById('tabla').play());
-                    $(this).find('.more-icon').removeClass('icon-headphones').addClass('icon-pause2')
-                    $(this).removeClass('play-button').addClass('pause-button');
-                    animation = window.requestAnimationFrame(animate);
-                    // animate();
-                } else {
-                  document.getElementById('bass').pause());
-                  document.getElementById('tabla').pause());
-                    $(this).find('.more-icon').removeClass('icon-pause2').addClass('icon-headphones')
-                    $(this).removeClass('pause-button').addClass('play-button');
-                    window.cancelAnimationFrame(animation);
-                    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-                }
-            });
-        } else {
-            document.querySelector('#fab').hide();
-        }
+        document.querySelector('#fab').addEventListener('click', function(event) {
+            if (this.classList.contains('play-button')) {
+                document.getElementById('bass').play();
+                // document.getElementById('tabla').play();
+                this.querySelector('.fa').classList.remove('fa-music');
+                this.querySelector('.fa').classList.add('fa-pause');
+                this.classList.remove('play-button');
+                this.classList.add('pause-button');
+                animation = window.requestAnimationFrame(animate);
+                // animate();
+            } else {
+                document.getElementById('bass').pause();
+            //   document.getElementById('tabla').pause();
+                this.querySelector('.fa').classList.remove('fa-pause');
+                this.querySelector('.fa').classList.add('fa-music');
+                this.classList.remove('pause-button');
+                this.classList.add('play-button');
+                window.cancelAnimationFrame(animation);
+                ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            }
+        });
 
 
         window.onresize = function(event) {
-            CANVAS_HEIGHT = $canvas.height();
-            CANVAS_WIDTH = $canvas.width();
+            CANVAS_HEIGHT = canvas.getBoundingClientRect().height;
+            CANVAS_WIDTH = canvas.getBoundingClientRect().width;
         }
 
 
     });
 
     var initializeCanvas = function() {
-        $canvas = $('#canvas');
-        ctx = $canvas.get(0).getContext('2d');
-        w = $canvas.parent().width();
-        h = $canvas.parent().height();
-        CANVAS_HEIGHT = $canvas.height();
-        CANVAS_WIDTH = $canvas.width();
-        // Resize the $canvas to fill the entire page
-        // $canvas.attr('width', w);
-        // $canvas.attr('height', h);
+        canvas = document.getElementById('canvas');
+        ctx = canvas.getContext('2d');
+        w = window.innerWidth;
+        h = window.innerHeight;
+        CANVAS_HEIGHT = canvas.getBoundingClientRect().height;
+        CANVAS_WIDTH = canvas.getBoundingClientRect().width;
+        // Resize the canvas to fill the entire page
+        // canvas.attr('width', w);
+        // canvas.attr('height', h);
     }
 
     var initializeWebAudio = function() {
-        audioCtx = new AudioContext();
-        analyser = audioCtx.createAnalyser();
-        analyser2 = audioCtx.createAnalyser();
+        // audioCtx = new AudioContext() || new webkitAudioContext();
+        var AudioContext = window.AudioContext // Default
+            // || window.webkitAudioContext // Safari and old versions of Chrome
+            || false; 
 
-        var audio = new Audio();
-        audio.src = 'audio/mantra--bass.ogg';
-        audio.id = 'bass';
-        audio.controls = false;
-        audio.autoplay = false;
-        $('main').append(audio);
+        if (AudioContext) {
+            // Do whatever you want using the Web Audio API
+            var audioCtx = new AudioContext;
+            analyser = audioCtx.createAnalyser();
+            analyser2 = audioCtx.createAnalyser();
 
-        var audio2 = new Audio();
-        audio2.src = 'audio/mantra--tabla.ogg';
-        audio2.id = 'tabla';
-        audio2.controls = false;
-        audio2.autoplay = false;
-        $('main').append(audio2);
+            var audio = new Audio();
+            audio.src = 'audio/gbus-to-mtv.mp3';
+            audio.id = 'bass';
+            audio.controls = false;
+            audio.autoplay = false;
+            document.querySelector('main').appendChild(audio);
 
-        var source = audioCtx.createMediaElementSource(audio);
-        source.connect(analyser);
-        var gainNode = audioCtx.createGain();
-        gainNode.gain.value = 1;
-        analyser.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        analyser.fftSize = 2048;
-        analyser.smoothingTimeConstant = 0.1;
+            // var audio2 = new Audio();
+            // audio2.src = 'audio/mantra--tabla.ogg';
+            // audio2.id = 'tabla';
+            // audio2.controls = false;
+            // audio2.autoplay = false;
+            // $('main').append(audio2);
 
-        var source2 = audioCtx.createMediaElementSource(audio2);
-        source2.connect(analyser2);
-        var gainNode2 = audioCtx.createGain();
-        gainNode2.gain.value = 1;
-        analyser2.connect(gainNode2);
-        gainNode2.connect(audioCtx.destination);
-        analyser2.fftSize = 2048;
-        analyser2.smoothingTimeConstant = 1;
-        //console.log(analyser.frequencyBinCount); // fftSize/2 = 32 data points
-        // Get the new frequency data
-        if (fdata === null || tdata === null) {
-            fdata = tdata = new Uint8Array(analyser.frequencyBinCount);
-        }
-        if (fdata2 === null || tdata2 === null) {
-            fdata2 = tdata2 = new Uint8Array(analyser2.frequencyBinCount);
+            var source = audioCtx.createMediaElementSource(audio);
+            source.connect(analyser);
+            var gainNode = audioCtx.createGain();
+            gainNode.gain.value = 1;
+            analyser.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            analyser.fftSize = 2048;
+            analyser.smoothingTimeConstant = 0.1;
+
+            // var source2 = audioCtx.createMediaElementSource(audio2);
+            // source2.connect(analyser2);
+            // var gainNode2 = audioCtx.createGain();
+            // gainNode2.gain.value = 1;
+            // analyser2.connect(gainNode2);
+            // gainNode2.connect(audioCtx.destination);
+            // analyser2.fftSize = 2048;
+            // analyser2.smoothingTimeConstant = 1;
+            //console.log(analyser.frequencyBinCount); // fftSize/2 = 32 data points
+            // Get the new frequency data
+            if (fdata === null || tdata === null) {
+                fdata = tdata = new Uint8Array(analyser.frequencyBinCount);
+            }
+            // if (fdata2 === null || tdata2 === null) {
+            //     fdata2 = tdata2 = new Uint8Array(analyser2.frequencyBinCount);
+            // }
+            // ...
+        } else {
+            // Web Audio API is not supported
+            document.getElementById('fab').classList.add('hide');
         }
     }
 
@@ -141,8 +152,8 @@ var audioCtx;
         analyser.getByteFrequencyData(fdata);
         analyser.getByteTimeDomainData(tdata);
 
-        analyser2.getByteFrequencyData(fdata2);
-        analyser2.getByteTimeDomainData(tdata2);
+        // analyser2.getByteFrequencyData(fdata2);
+        // analyser2.getByteTimeDomainData(tdata2);
 
         var bufferLength = analyser.frequencyBinCount;
         var bufferLength2 = analyser2.frequencyBinCount;
@@ -159,7 +170,7 @@ var audioCtx;
 
 
         for (var i = 0; i < bufferLength2; i++) {
-            barHeight = fdata2[i];
+            barHeight = fdata[i];
             ctx.fillStyle = 'rgb(105,240,174)';
             ctx.fillRect(x, CANVAS_HEIGHT/2 - barHeight+ 50, barWidth+1, barHeight);
 
@@ -169,7 +180,7 @@ var audioCtx;
         x = 0;
 
         for (var i = 0; i < bufferLength; i++) {
-            barHeight = fdata2[i];
+            barHeight = fdata[i];
             ctx.fillStyle = 'rgb(126,87,194)';
             //ctx.fillStyle = 'rgb(70,' + (barHeight + 120) + ',' + (barHeight/4 + 80);
             ctx.fillRect(x, CANVAS_HEIGHT/2 - barHeight + 100, barWidth+1, barHeight);
