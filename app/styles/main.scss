@@ -14,50 +14,24 @@
  * limitations under the License.
  */
 
-@import "../images/icons/font-awesome-4.7.0/scss/font-awesome.scss";
+@import "../fonts/icons/font-awesome-4.7.0/scss/font-awesome.scss";
 
 html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
   margin: 0;
   padding: 0;
 }
-@font-face {
-    font-family: icons;
-    src: url(../images/icons/icons.eot);
-    src: url(../images/icons/icons.eot?#iefix) format('embedded-opentype'),url(../images/icons/icons.woff2) format('woff2'),url(../images/icons/icons.woff) format('woff'),url(../images/icons/icons.ttf) format('truetype'),url(../images/icons/icons.svg?#icons) format('svg');
-    font-weight: 400;
-    font-style: normal
+
+h1 {
+    margin: 0 0 18px;
 }
 
-@font-face {
-    font-family: moreicons;
-    src: url(../images/icons/more-icons/more-icons.eot);
-    src: url(../images/icons/more-icons/more-icons.eot?#iefix) format('embedded-opentype'),url(../images/icons/more-icons/more-icons.woff) format('woff'),url(../images/icons/more-icons/more-icons.ttf) format('truetype'),url(../images/icons/more-icons/more-icons.svg?#icons) format('svg');
-    font-weight: 400;
-    font-style: normal
+p {
+    font-size: 16px;
 }
 
-.icon {
-    font-family: 'icons';
-    display: inline-block;
-    vertical-align: top;
-    line-height: 1;
-    font-weight: 400;
-    font-style: normal;
-    speak: none;
-    text-decoration: inherit;
-    text-transform: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
-}
-
-.more-icon {
-    font-family: 'moreicons'
-}
-
-.icon-headphones:before {
-    content: '\e910'
+#fab.hide {
+    display: none;
 }
 
 .icons {
@@ -67,19 +41,19 @@ html, body {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
-    -webkit-justify-content: space-between;
+    -webkit-justify-content: center;
     -ms-flex-pack: justify;
-    justify-content: space-between;
+    justify-content: center;
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 90px;
-    max-width:320px;
+    margin-bottom: 0;
+    max-width: 420px;
 }
 
 .icons a {
     display: block;
-    font-size: 30px;
+    font-size: 42px;
     padding: 8px;
     background-repeat: no-repeat;
     background-position: 50% 50%;
@@ -95,5 +69,12 @@ html, body {
 @media only screen and (max-width : 568px) {
   h1 {
     font-size:36px;
+  }
+  .icons a {
+      font-size: 24px;
+  }
+  .icons {
+      flex-wrap: wrap;
+      max-width: 190px;
   }
 }
